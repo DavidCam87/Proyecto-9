@@ -7,11 +7,13 @@ const scrapper = async (url) => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   await page.goto(url);
+  await page.$eval("#cookiesAcceptAll", (el) => el.click());
 
   repeatProcess(page);
 };
 
 const repeatProcess = async (page, browser) => {
+
   const arrayDivPortatil = await page.$$(".product-card");
   for (const portatilDiv of arrayDivPortatil) {
     let img = await portatilDiv.$eval("img", (el) => el.src);
